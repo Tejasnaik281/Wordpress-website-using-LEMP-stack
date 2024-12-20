@@ -21,20 +21,21 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Step 3: Deploy files to VPS
+
       - name: Deploy WordPress Files
         run: |
-          # Define variables
-          VPS_USER=${{ secrets.VPS_USER }}
-          VPS_HOST=${{ secrets.VPS_HOST }}
+          EC2_USER=${{ secrets.VPS_USER }}
+          BASTION_HOST=${{ secrets.BASTION_HOST }}
+          PRIVATE_EC2=${{ secrets.VPS_HOST }}
           WORDPRESS_DIR=${{ secrets.VPS_WORDPRESS_DIR }}
 
-          echo "Deploying WordPress files to $VPS_USER@$VPS_HOST:$WORDPRESS_DIR"
+          echo "Deploying WordPress files to $PRIVATE_EC2 via Bastion Host $BASTION_HOST"
 
-          # Sync files using rsync
-          rsync -avz --delete \
-            --exclude='.git/' \
-            --exclude='wp-config.php' \
-            ./ $VPS_USER@$VPS_HOST:$WORDPRESS_DIR
+          # Sync files via Bastion Host
+          rsync -e "ssh -o ProxyCommand='ssh -W %h:%p $EC2_USER@$BASTION_HOST'" -avz --delete \
+            ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
+
+        
 
       # Step 4: Reload the web server (optional)
       - name: Reload Nginx
@@ -44,4 +45,3 @@ jobs:
       # Optional: Notify success
       - name: Notify Deployment Success
         run: echo "WordPress deployment complete!"
-##
