@@ -20,8 +20,42 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Step 3: Deploy files to VPS
+      # Step 3: Install AWS CLI
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
 
+      # Step 4: Retrieve the GitHub Runner's Public IP
+      - name: Get Runner's Public IP
+        id: get_ip
+        run: |
+          PUBLIC_IP=$(curl -s https://checkip.amazonaws.com)
+          echo "Public IP: $PUBLIC_IP"
+          echo "PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
+
+      # Step 5: Update Security Group with Runner's Public IP
+      - name: Update Bastion Security Group
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SECURITY_GROUP_ID: ${{ secrets.SECURITY_GROUP_ID }}
+        run: |
+          # Get the current public IP
+          PUBLIC_IP=$PUBLIC_IP
+          echo "Adding $PUBLIC_IP to security group $SECURITY_GROUP_ID"
+
+          # Add ingress rule for the runner's IP
+          aws ec2 authorize-security-group-ingress \
+            --group-id $SECURITY_GROUP_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr "$PUBLIC_IP/32"
+
+
+      # Step 6: Deploy files to VPS
+      
       - name: Deploy WordPress Files
         run: |
           EC2_USER=${{ secrets.VPS_USER }}
@@ -37,11 +71,30 @@ jobs:
 
         
 
-      # Step 4: Reload the web server (optional)
+      # Step 7: Reload the web server (optional)
       - name: Reload Nginx
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo systemctl reload nginx"
 
-      # Optional: Notify success
+      # Notify success
       - name: Notify Deployment Success
         run: echo "WordPress deployment complete!"
+
+      # Step 8: Remove IP from Security Group (Optional)
+      - name: Remove IP from Security Group
+        if: always() # Ensure this step runs regardless of the outcome of previous steps
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SECURITY_GROUP_ID: ${{ secrets.SECURITY_GROUP_ID }}
+        run: |
+          echo "Removing $PUBLIC_IP from security group $SECURITY_GROUP_ID"
+
+          # Remove ingress rule for the runner's IP
+          aws ec2 revoke-security-group-ingress \
+            --group-id $SECURITY_GROUP_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr "$PUBLIC_IP/32"
+##*
