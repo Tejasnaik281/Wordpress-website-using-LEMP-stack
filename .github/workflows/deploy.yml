@@ -90,7 +90,7 @@ jobs:
             --exclude '.git/' \
             --exclude 'wp-config.php' \
             --exclude 'wp-content/uploads' \
-            ./ $USER@$HOST:$WORDPRESS_DIR
+            ./ $EC2_USER@$BASTION_HOST:$WORDPRESS_DIR
 
         
 
