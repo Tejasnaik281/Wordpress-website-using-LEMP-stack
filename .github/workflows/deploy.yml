@@ -65,25 +65,25 @@ jobs:
 
           echo "Deploying WordPress files to $PRIVATE_EC2 via Bastion Host $BASTION_HOST"
 
-          # # Sync files via Bastion Host
-          # rsync -e "ssh -o ProxyCommand='ssh -W %h:%p $EC2_USER@$BASTION_HOST'" -avz --delete \
-          #   ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
+          # Sync files via Bastion Host
+          rsync -e "ssh -o ProxyCommand='ssh -W %h:%p $EC2_USER@$BASTION_HOST'" -avz --delete \
+           ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
 
 
-          # Create SSH configuration for bastion host
-          echo "Host bastion
-          HostName $BASTION_HOST
-          User $EC2_USER
-          IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
+          # # Create SSH configuration for bastion host
+          # echo "Host bastion
+          # HostName $BASTION_HOST
+          # User $EC2_USER
+          # IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
 
-          # Proxy through bastion host to access private VPS
-          echo "Host vps
-          HostName $VPS_PRIVATE_IP
-          User $VPS_USER
-          ProxyJump bastion
-          IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+          # # Proxy through bastion host to access private VPS
+          # echo "Host vps
+          # HostName $VPS_PRIVATE_IP
+          # User $VPS_USER
+          # ProxyJump bastion
+          # IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
 
-          chmod 600 ~/.ssh/config
+          # chmod 600 ~/.ssh/config
 
 
           rsync -avz --delete \
