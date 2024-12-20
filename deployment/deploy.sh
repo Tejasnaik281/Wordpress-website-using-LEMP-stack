@@ -4,7 +4,7 @@ set -e
 REPO_DIR="/var/www/html/projectlemp"
 BRANCH="master"
 
-if [ ! -d "$REPO_DIR/.git" ]; then
+if [ ! -d "$REPO_DIR/.git" ];
     echo "Cloning repository..."
     git clone -b $BRANCH git@github.com:Tejasnaik281/Wordpress-website-using-LEMP-stack.git $REPO_DIR
 
