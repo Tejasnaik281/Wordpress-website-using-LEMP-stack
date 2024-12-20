@@ -1,0 +1,47 @@
+name: Deploy WordPress
+
+on:
+  push:
+    branches:
+      - master  # Trigger workflow on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up SSH
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Step 3: Deploy files to VPS
+      - name: Deploy WordPress Files
+        run: |
+          # Define variables
+          VPS_USER=${{ secrets.VPS_USER }}
+          VPS_HOST=${{ secrets.VPS_HOST }}
+          WORDPRESS_DIR=${{ secrets.VPS_WORDPRESS_DIR }}
+
+          echo "Deploying WordPress files to $VPS_USER@$VPS_HOST:$WORDPRESS_DIR"
+
+          # Sync files using rsync
+          rsync -avz --delete \
+            --exclude='.git/' \
+            --exclude='wp-config.php' \
+            ./ $VPS_USER@$VPS_HOST:$WORDPRESS_DIR
+
+      # Step 4: Reload the web server (optional)
+      - name: Reload Nginx
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo systemctl reload nginx"
+
+      # Optional: Notify success
+      - name: Notify Deployment Success
+        run: echo "WordPress deployment complete!"
+##
