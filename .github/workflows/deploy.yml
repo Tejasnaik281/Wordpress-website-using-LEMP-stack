@@ -69,6 +69,29 @@ jobs:
           rsync -e "ssh -o ProxyCommand='ssh -W %h:%p $EC2_USER@$BASTION_HOST'" -avz --delete \
             ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
 
+###############################
+          # Create SSH configuration for bastion host
+          echo "Host bastion
+          HostName $BASTION_HOST
+          User $EC2_USER
+          IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
+
+          # Proxy through bastion host to access private VPS
+          echo "Host vps
+          HostName $VPS_PRIVATE_IP
+          User $VPS_USER
+          ProxyJump bastion
+          IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+
+          chmod 600 ~/.ssh/config
+
+
+          rsync -avz --delete \
+            --exclude '.git/' \
+            --exclude 'wp-config.php' \
+            --exclude 'wp-content/uploads' \
+            ./ $USER@$HOST:$WORDPRESS_DIR
+
         
 
       # Step 7: Reload the web server (optional)
