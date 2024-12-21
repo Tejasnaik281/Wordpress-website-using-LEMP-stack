@@ -104,9 +104,15 @@ jobs:
         
 
       # Step 7: Reload the web server (optional)
-      - name: Reload Nginx
+      # - name: Reload Nginx
+      #   run: |
+      #     ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo systemctl reload nginx"
+      - name: Reload Nginx on Private Server via Bastion Host
         run: |
-          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo systemctl reload nginx"
+          ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          -o ProxyCommand="ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.EC2_USER }}@${{ secrets.BASTION_HOST }} -W %h:%p" \
+          ${{ secrets.EC2_USER }}@${{ secrets.PRIVATE_EC2 }} "sudo systemctl reload nginx"
+
 
       # Notify success
       - name: Notify Deployment Success
