@@ -116,8 +116,8 @@ jobs:
           PEM_KEY: ${{ secrets.KEY_FOR_LEMP }}
         run: |
           ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-          -o ProxyCommand="ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.EC2_USER }}@${{ secrets.BASTION_HOST }} -W %h:%p" \
-          ${{ secrets.EC2_USER }}@${{ secrets.PRIVATE_EC2 }} "sudo systemctl reload nginx"
+          -o ProxyCommand="ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $EC2_USER@$BASTION_HOST -W %h:%p" \
+          $EC2_USER@$PRIVATE_EC2 "sudo systemctl reload nginx"
 
 
       # Notify success
