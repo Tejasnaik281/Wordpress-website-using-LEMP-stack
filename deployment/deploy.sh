@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-REPO_DIR="/var/www/html/projectlemp"
+REPO_DIR="/var/www/html/wordpress"
 BRANCH="master"
 
 if [ ! -d "$REPO_DIR/.git" ];
