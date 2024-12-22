@@ -79,16 +79,17 @@ jobs:
             --exclude 'wp-content/uploads' \
             --include 'deployment/deploy.sh' \
             --include 'deployment/setup.sh' \
+            --include 'fetch_data.php' \
             --exclude '*' \
 
             ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR && \
-            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p $EC2_USER@$BASTION_HOST" \
+
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p $EC2_USER@$BASTION_HOST" \
             fetch_data.php $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR  && \
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p $EC2_USER@$BASTION_HOST" \
-            $EC2_USER@$PRIVATE_EC2
-
-            "sudo systemctl reload nginx"
-
+          
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p $EC2_USER@$BASTION_HOST" \
+            $EC2_USER@$PRIVATE_EC2 "sudo systemctl reload nginx"
+          
           # # Create SSH configuration for bastion host
           # echo "Host bastion
           # HostName $BASTION_HOST
