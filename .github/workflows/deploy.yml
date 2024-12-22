@@ -149,7 +149,7 @@ jobs:
             -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
             $EC2_USER@$PRIVATE_EC2 \
 
-            "sudo systemctl reload nginx"
+          "sudo systemctl reload nginx"
 
 
       
