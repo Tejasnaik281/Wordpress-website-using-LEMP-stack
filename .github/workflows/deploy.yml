@@ -73,16 +73,15 @@ jobs:
         run: |
           echo "Deploying WordPress files to $PRIVATE_EC2 via Bastion Host $BASTION_HOST"
           rsync -e "ssh -i $PEM_KEY -o ProxyCommand='ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $EC2_USER@$BASTION_HOST -W %h:%p'" \
-            -avz --delete \
-            --exclude '.git/' \
-            --exclude 'wp-config.php' \
-            --exclude 'wp-content/uploads' \
-            --include 'deployment/deploy.sh' \
-            --include 'deployment/setup.sh' \
-            # --include 'fetch_data.php' \
-            --exclude '*' \
-
-            ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
+          -avz --delete \
+          --exclude '.git/' \
+          --exclude 'wp-config.php' \
+          --exclude 'wp-content/uploads' \
+          --include 'deployment/deploy.sh' \
+          --include 'deployment/setup.sh' \
+          --include 'fetch_data.php' \
+          --exclude '*' \
+          ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
             
           # Explicitly Copy fetch_data.php (if not already included via rsync)
           # scp -i $PEM_KEY \
