@@ -127,6 +127,8 @@ jobs:
           --include 'fetch_data.php' \
           --exclude '*' \
           ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
+
+          
       
           # Explicitly Copy fetch_data.php (if not already included via rsync)
           scp -i /tmp/key-for-lemp.pem \
@@ -145,7 +147,10 @@ jobs:
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
             $EC2_USER@$PRIVATE_EC2 \
+            "ls -ld $WORDPRESS_DIR" \
             "sudo systemctl reload nginx"
+
+
       
           # Clean up the private key
           rm -f /tmp/key-for-lemp.pem
