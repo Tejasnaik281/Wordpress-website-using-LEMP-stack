@@ -147,7 +147,7 @@ jobs:
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
             $EC2_USER@$PRIVATE_EC2 \
-            "ls -ld $WORDPRESS_DIR" \
+
             "sudo systemctl reload nginx"
 
 
