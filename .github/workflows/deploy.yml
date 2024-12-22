@@ -98,45 +98,6 @@ jobs:
             -o ProxyCommand="ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
             $EC2_USER@$PRIVATE_EC2 "sudo systemctl reload nginx"
           
-          # # Create SSH configuration for bastion host
-          # echo "Host bastion
-          # HostName $BASTION_HOST
-          # User $EC2_USER
-          # IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
-
-          # # Proxy through bastion host to access private VPS
-          # echo "Host vps
-          # HostName $VPS_PRIVATE_IP
-          # User $VPS_USER
-          # ProxyJump bastion
-          # IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
-
-          # chmod 600 ~/.ssh/config
-
-
-          # rsync -avz --delete \
-          #   --exclude '.git/' \
-          #   --exclude 'wp-config.php' \
-          #   --exclude 'wp-content/uploads' \
-          #   ./ $EC2_USER@$BASTION_HOST:$WORDPRESS_DIR
-
-        
-
-      # Step 7: Reload the web server (optional)
-      # - name: Reload Nginx
-      #   run: |
-      #     ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo systemctl reload nginx"
-      # - name: Reload Nginx on Private Server via Bastion Host
-      #   env:
-      #     EC2_USER: ${{ secrets.VPS_USER }}
-      #     BASTION_HOST: ${{ secrets.BASTION_HOST }}
-      #     PRIVATE_EC2: ${{ secrets.VPS_HOST }}
-      #     WORDPRESS_DIR: ${{ secrets.VPS_WORDPRESS_DIR }}
-      #     PEM_KEY: ${{ secrets.KEY_FOR_LEMP }}
-      #   run: |
-      #     ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-      #     -o ProxyCommand='ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $EC2_USER@$BASTION_HOST -W %h:%p' \
-      #     $EC2_USER@$PRIVATE_EC2 "sudo systemctl reload nginx"
 
 
       # Notify success
