@@ -82,7 +82,7 @@ jobs:
             --include 'fetch_data.php' \
             --exclude '*' \
 
-            ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR && \
+            ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
             
           # Explicitly Copy fetch_data.php (if not already included via rsync)
           scp -i $PEM_KEY \
