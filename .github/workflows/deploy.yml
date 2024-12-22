@@ -147,9 +147,7 @@ jobs:
             -o ProxyCommand="ssh -i /tmp/key-for-lemp.pem \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
-            $EC2_USER@$PRIVATE_EC2  &&\
-
-            "sudo systemctl restart nginx"
+            $EC2_USER@$PRIVATE_EC2 "sudo systemctl restart nginx"
 
 
       
