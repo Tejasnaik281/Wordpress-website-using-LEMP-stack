@@ -79,7 +79,7 @@ jobs:
             --exclude 'wp-content/uploads' \
             --include 'deployment/deploy.sh' \
             --include 'deployment/setup.sh' \
-            --include 'fetch_data.php' \
+            # --include 'fetch_data.php' \
             --exclude '*' \
 
             ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
