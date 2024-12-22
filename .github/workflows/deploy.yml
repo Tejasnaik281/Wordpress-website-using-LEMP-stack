@@ -77,6 +77,10 @@ jobs:
             --exclude '.git/' \
             --exclude 'wp-config.php' \
             --exclude 'wp-content/uploads' \
+            --include 'deployment/deploy.sh' \
+            --include 'deployment/setup.sh' \
+            --exclude '*' \
+
             ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR "sudo systemctl reload nginx"
 
           # # Create SSH configuration for bastion host
