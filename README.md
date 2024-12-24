@@ -10,14 +10,14 @@ Automated deployment project for Hosting a WordPress website using LEMP (Linux, 
 
 │   ├── workflows/
 
-│   │   └── deploy.yml     # GitHub Actions workflow for automated deployment
+│   │       └── deploy.yml     # GitHub Actions workflow for automated deployment
 │
 
 ├── deployment/
 
-│   ├── setup.sh           # Script for initial server setup
+│            └──setup.sh           # Script for initial server setup
 
-│   ├── deploy.sh          # Script for syncing files and restarting services
+│            └──deploy.sh          # Script for syncing files and restarting services
 
 │
 ├── nginx/
