@@ -41,9 +41,9 @@ SSL/TLS: Managed via Let's Encrypt
 │                    └──deploy.sh          # Script for syncing files and restarting services
 
 
-├── nginx/
-
-                  └── wordpress.conf     # Nginx server configuration for WordPress
+├── nginx/           
+              
+                    └── wordpress.conf     # Nginx server configuration for WordPress
                     
 
 
