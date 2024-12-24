@@ -29,17 +29,16 @@ SSL/TLS: Managed via Let's Encrypt
 
 ├── .github/workflows/
 
-│ 
 
-│       └── deploy.yml               # GitHub Actions workflow for automated deployment
+       └── deploy.yml               # GitHub Actions workflow for automated deployment
 
 │
 
 ├── deployment/
 
-│   ├── setup.sh                    # Setup script  for initial server setup
+   └── setup.sh                    # Setup script  for initial server setup
 
-│   └── deploy.sh                   # Deployment script  for syncing files and restarting services
+   └── deploy.sh                   # Deployment script  for syncing files and restarting services
 
 │
 
@@ -49,7 +48,7 @@ SSL/TLS: Managed via Let's Encrypt
 
 ├── nginx/
 
-│   └── wordpress.conf               # NGINX config for WordPress
+   └── wordpress.conf               # NGINX config for WordPress
 
 │
 
