@@ -4,15 +4,21 @@ Automated deployment project for Hosting a WordPress website using LEMP (Linux, 
 
 
 
-# Directory Structure
+## Directory Structure
 
 ├── .github/
+
 │   ├── workflows/
+
 │   │   └── deploy.yml     # GitHub Actions workflow for automated deployment
 │
+
 ├── deployment/
+
 │   ├── setup.sh           # Script for initial server setup
+
 │   ├── deploy.sh          # Script for syncing files and restarting services
+
 │
 ├── nginx/
 │   └── wordpress.conf     # Nginx server configuration for WordPress
