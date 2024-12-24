@@ -44,12 +44,19 @@ SSL/TLS: Managed via Let's Encrypt
 │
 
 ├── .env                             # Environment variables for secrets and configurations
+
 │
+
 ├── nginx/
+
 │   └── wordpress.conf               # NGINX config for WordPress
+
 │
+
 ├── fetch_data.php                   # PHP script for fetching data from DB
+
 │
+
 └── wp-config.php                    # WordPress config file
 
 
