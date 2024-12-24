@@ -42,9 +42,7 @@ SSL/TLS: Managed via Let's Encrypt
 
 
 ├── nginx/
-
                     └── wordpress.conf     # Nginx server configuration for WordPress
-
 │
 
 ├── .env                   # Environment variables for secrets and configurations
