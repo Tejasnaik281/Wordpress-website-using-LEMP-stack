@@ -1,7 +1,6 @@
 # Wordpress-website-using-LEMP-stack
 Automated deployment project for Hosting a WordPress website using LEMP (Linux, Nginx, MySQL, PHP) stack.
 
-
 ## Project Overview
 
 Tech Stack: Ubuntu 22.04, Nginx, MySQL, PHP, AWS (EC2, ALB, Route53, Bastion Host)
@@ -29,8 +28,10 @@ SSL/TLS: Managed via Let's Encrypt
 
 │                    └── deploy.yml     # GitHub Actions workflow for automated deployment
 
+|
 
 ├── deployment/
+
 |
 
 │                    └──setup.sh           # Script for initial server setup
@@ -39,13 +40,17 @@ SSL/TLS: Managed via Let's Encrypt
 
 │                    └──deploy.sh          # Script for syncing files and restarting services
 
-│
+
 ├── nginx/
-│                     └── wordpress.conf     # Nginx server configuration for WordPress
+                    └── wordpress.conf     # Nginx server configuration for WordPress
 │
+
 ├── .env                   # Environment variables for secrets and configurations
+
 ├── wp-config.php          # WordPress configuration file
+
 ├── fetch_data.php         # Script for database or data-fetch tasks
+
 └── README.md              # Project documentation
 
 
@@ -96,6 +101,14 @@ GitHub Actions will automatically deploy the code to your VPS.
 Certbot is used to issue SSL certificates.
 
 Ensure HTTPS traffic is correctly forwarded from ALB to the VPS.
+
+### Commands 
+
+Restart Nginx: sudo systemctl restart nginx
+
+Check Nginx Logs: sudo tail -f /var/log/nginx/error.log
+
+Test SSL: sudo certbot renew --dry-run
 
  
    
