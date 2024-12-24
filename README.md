@@ -22,43 +22,11 @@ SSL/TLS: Managed via Let's Encrypt
 
 ## Directory Structure
 
-├── .github/
-
-│   ├── workflows/
-
-│                    └── deploy.yml     # GitHub Actions workflow for automated deployment
-
-|
-
-├── deployment/
-
-|
-
-│                    └──setup.sh           # Script for initial server setup
-
-|
-
-│                    └──deploy.sh          # Script for syncing files and restarting services
-
-
-├── nginx/           
-              
-                    └── wordpress.conf     # Nginx server configuration for WordPress
-                    
-
-
-├── .env                   # Environment variables for secrets and configurations
-
-├── wp-config.php          # WordPress configuration file
-
-├── fetch_data.php         # Script for database or data-fetch tasks
-
-└── README.md              # Project documentation
-
 
 /Wordpress-website-using-LEMP-stack/
 
 │
+
 ├── .github/
 
 │   └── workflows/
@@ -66,10 +34,15 @@ SSL/TLS: Managed via Let's Encrypt
 │       └── deploy.yml               # GitHub Actions workflow for automated deployment
 
 │
+
 ├── deployment/
+
 │   ├── setup.sh                    # Setup script  for initial server setup
+
 │   └── deploy.sh                   # Deployment script  for syncing files and restarting services
+
 │
+
 ├── .env                             # Environment variables for secrets and configurations
 │
 ├── nginx/
