@@ -1,7 +1,23 @@
 # Wordpress-website-using-LEMP-stack
 Automated deployment project for Hosting a WordPress website using LEMP (Linux, Nginx, MySQL, PHP) stack.
 
+## Project Overview
 
+Tech Stack: Ubuntu 22.04, Nginx, MySQL, PHP, AWS (EC2, ALB, Route53, Bastion Host)
+
+Automation Tools: GitHub Actions, AWS CLI, Certbot (Let's Encrypt)
+
+Purpose: Automated, secure, and scalable WordPress deployment.
+
+## Architecture Diagram
+
+Frontend: Route53 → Application Load Balancer
+
+Backend: Target Group → VPS (LEMP Stack)
+
+SSH Access: Bastion Host
+
+SSL/TLS: Managed via Let's Encrypt
 
 
 ## Directory Structure
@@ -11,7 +27,7 @@ Automated deployment project for Hosting a WordPress website using LEMP (Linux, 
 │   ├── workflows/
 
 │                    └── deploy.yml     # GitHub Actions workflow for automated deployment
-│
+
 
 ├── deployment/
 |
@@ -30,3 +46,26 @@ Automated deployment project for Hosting a WordPress website using LEMP (Linux, 
 ├── wp-config.php          # WordPress configuration file
 ├── fetch_data.php         # Script for database or data-fetch tasks
 └── README.md              # Project documentation
+
+
+## Setup Instructions
+
+### Clone the Repository
+   
+git clone -b master https://github.com/Tejasnaik281/Wordpress-website-using-LEMP-stack.git
+   
+cd Wordpress-website-using-LEMP-stack
+
+ ###  Update Environment Variables
+DB_NAME=wordpress
+
+DB_USER=wp_user
+
+DB_PASSWORD=your_password
+
+AWS_ACCESS_KEY_ID=your_key
+AWS_SECRET_ACCESS_KEY=your_secret
+AWS_REGION=your_region
+
+ ### Create a .env file with the required secrets:
+   
