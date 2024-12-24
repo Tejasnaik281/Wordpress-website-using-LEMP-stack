@@ -56,6 +56,30 @@ SSL/TLS: Managed via Let's Encrypt
 └── README.md              # Project documentation
 
 
+/Wordpress-website-using-LEMP-stack/
+
+│
+├── .github/
+
+│   └── workflows/
+
+│       └── deploy.yml               # GitHub Actions workflow for automated deployment
+
+│
+├── deployment/
+│   ├── setup.sh                    # Setup script  for initial server setup
+│   └── deploy.sh                   # Deployment script  for syncing files and restarting services
+│
+├── .env                             # Environment variables for secrets and configurations
+│
+├── nginx/
+│   └── wordpress.conf               # NGINX config for WordPress
+│
+├── fetch_data.php                   # PHP script for fetching data from DB
+│
+└── wp-config.php                    # WordPress config file
+
+
 ## Setup Instructions
 
 ### Clone the Repository
