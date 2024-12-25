@@ -1,6 +1,8 @@
 # Wordpress-website-using-LEMP-stack
 Automated deployment project for Hosting a WordPress website using LEMP (Linux, Nginx, MySQL, PHP) stack.
 
+https://codesherlock.com/
+
 ## Project Overview
 
 Tech Stack: Ubuntu 22.04, Nginx, MySQL, PHP, AWS (EC2, ALB, Route53, Bastion Host)
