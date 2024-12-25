@@ -32,7 +32,7 @@ SSL/TLS: Managed via Let's Encrypt
 
 └── deploy.yml               # GitHub Actions workflow for automated deployment
 
-│
+
 
 ├── deployment/
 
@@ -40,17 +40,17 @@ SSL/TLS: Managed via Let's Encrypt
 
    └── deploy.sh                   # Deployment script  for syncing files and restarting services
 
-│
+
 
 ├── .env                             # Environment variables for secrets and configurations
 
-│
+
 
 ├── nginx/
 
    └── wordpress.conf               # NGINX config for WordPress
 
-│
+|
 
 ├── fetch_data.php                   # PHP script for fetching data from DB
 
