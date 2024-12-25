@@ -3,7 +3,7 @@ name: Deploy WordPress
 on:
   push:
     branches:
-      - master  # Trigger workflow on push to the main branch
+      - master  # Triggers workflow on push to the master branch
 
 jobs:
   deploy:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up SSH
+      # Step 2: Setting up the SSH
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@v0.5.3
         with:
@@ -53,49 +53,7 @@ jobs:
             --port 22 \
             --cidr "$PUBLIC_IP/32"
 
-
-      # # Step 6: Deploy files to VPS
-      
-      # - name: Deploy WordPress Files
-      #   env:
-      #     EC2_USER: ${{ secrets.VPS_USER }}
-      #     BASTION_HOST: ${{ secrets.BASTION_HOST }}
-      #     PRIVATE_EC2: ${{ secrets.VPS_HOST }}
-      #     WORDPRESS_DIR: ${{ secrets.VPS_WORDPRESS_DIR }}
-      #     PEM_KEY: ${{ secrets.KEY_FOR_LEMP }}
-      #   # Create the private key file from GitHub secret
-      #   run: |
-      #     echo "$PEM_KEY" | tr -d '\r' > ~/.ssh/key-for-lemp.pem
-      #     chmod 600 ~/.ssh/key-for-lemp.pem
-          
-      #     echo "Deploying WordPress files to $PRIVATE_EC2 via Bastion Host $BASTION_HOST"
-          
-      #     # Sync files via Bastion Host with rsync
-      #     rsync -e "ssh -i ~/.ssh/key-for-lemp.pem -o ProxyCommand='ssh -i ~/.ssh/key-for-lemp.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $EC2_USER@$BASTION_HOST -W %h:%p'" \
-      #     -avzvv --delete \
-      #     --exclude '.git/' \
-      #     --exclude 'wp-config.php' \
-      #     --exclude 'wp-content/uploads' \
-      #     --include 'deployment/deploy.sh' \
-      #     --include 'deployment/setup.sh' \
-      #     --include 'fetch_data.php' \
-      #     --exclude '*' \
-      #     ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
-          
-      #     # Explicitly Copy fetch_data.php (if not already included via rsync)
-      #     scp -i ~/.ssh/key-for-lemp.pem \
-      #       -o StrictHostKeyChecking=no \
-      #       -o UserKnownHostsFile=/dev/null \
-      #       -o ProxyCommand="ssh -i ~/.ssh/key-for-lemp.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
-      #       fetch_data.php $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
-          
-      #     # Reload Nginx to apply changes
-      #     ssh -i ~/.ssh/key-for-lemp.pem \
-      #       -o StrictHostKeyChecking=no \
-      #       -o UserKnownHostsFile=/dev/null \
-      #       -o ProxyCommand="ssh -i ~/.ssh/key-for-lemp.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
-      #       $EC2_USER@$PRIVATE_EC2 \
-      #       "sudo systemctl reload nginx"
+      # Step 6: Deploying the wordpress files with the help of secrets 
       - name: Deploy WordPress Files
         env:
           EC2_USER: ${{ secrets.VPS_USER }}
@@ -154,49 +112,11 @@ jobs:
           # Clean up the private key
           rm -f /tmp/key-for-lemp.pem
 
-        
-        # run: |
-        #   # # Create the private key file from GitHub secret
-        #   # echo "$PEM_KEY" > ~/.ssh/key-for-lemp.pem
-        #   # chmod 600 ~/.ssh/key-for-lemp.pem
-          
-        #   echo "Deploying WordPress files to $PRIVATE_EC2 via Bastion Host $BASTION_HOST"
-      
-        #   # Sync files via Bastion Host with rsync
-        #   rsync -e "ssh -i $PEM_KEY -o ProxyCommand='ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $EC2_USER@$BASTION_HOST -W %h:%p'" \
-        #   -avzvv --delete \
-        #   --exclude '.git/' \
-        #   --exclude 'wp-config.php' \
-        #   --exclude 'wp-content/uploads' \
-        #   --include 'deployment/deploy.sh' \
-        #   --include 'deployment/setup.sh' \
-        #   --include 'fetch_data.php' \
-        #   --exclude '*' \
-        #   ./ $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
-      
-        #   # Explicitly Copy fetch_data.php (if not already included via rsync)
-        #   scp -i $PEM_KEY \
-        #     -o StrictHostKeyChecking=no \
-        #     -o UserKnownHostsFile=/dev/null \
-        #     -o ProxyCommand="ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
-        #     fetch_data.php $EC2_USER@$PRIVATE_EC2:$WORDPRESS_DIR
-      
-        #   # Reload Nginx to apply changes
-        #   ssh -i $PEM_KEY \
-        #     -o StrictHostKeyChecking=no \
-        #     -o UserKnownHostsFile=/dev/null \
-        #     -o ProxyCommand="ssh -i $PEM_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p $EC2_USER@$BASTION_HOST" \
-        #     $EC2_USER@$PRIVATE_EC2 \
-        #     "sudo systemctl reload nginx"
-
-          
-  
-
       # Notify success
       - name: Notify Deployment Success
         run: echo "WordPress deployment complete!"
 
-      # Step 8: Remove IP from Security Group (Optional)
+      # Step 8: Removing the runners public IP from Security Group
       - name: Remove IP from Security Group
         if: always() # Ensure this step runs regardless of the outcome of previous steps
         env:
