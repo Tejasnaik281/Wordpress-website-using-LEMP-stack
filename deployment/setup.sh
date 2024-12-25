@@ -28,21 +28,3 @@ sudo nginx -t     # will check the file for any syntax errors and test
 sudo systemctl restart nginx   #restart the nginx server
 
 
-#!/bin/bash
-# Server Setup Script
-
-
-# echo "Updating server packages..."
-# sudo apt update && sudo apt upgrade -y
-
-
-# echo "Setting up correct permissions for WordPress..."
-# sudo chown -R www-data:www-data /var/www/html/wordpress
-# sudo find /var/www/html/wordpress/ -type d -exec chmod 755 {} \;
-# sudo find /var/www/html/wordpress/ -type f -exec chmod 644 {} \;
-
-# echo "Restarting Nginx and PHP services..."
-# sudo ln -s /etc/nginx/sites-available/projectlemp /etc/nginx/sites-enabled/
-# sudo nginx -t
-# sudo systemctl restart nginx
-# sudo systemctl restart php7.4-fpm
