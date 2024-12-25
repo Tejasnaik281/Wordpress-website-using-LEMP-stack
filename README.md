@@ -30,7 +30,7 @@ SSL/TLS: Managed via Let's Encrypt
 ├── .github/workflows/
 
 
-       └── deploy.yml               # GitHub Actions workflow for automated deployment
+└── deploy.yml               # GitHub Actions workflow for automated deployment
 
 │
 
